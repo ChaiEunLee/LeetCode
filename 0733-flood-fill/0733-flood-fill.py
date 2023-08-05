@@ -13,9 +13,7 @@ class Solution:
                 dfs(i+1,j)
                 dfs(i,j-1)
                 dfs(i,j+1)
-            else:
-                return
-            
+
         dfs(sr,sc)
                 
         return image

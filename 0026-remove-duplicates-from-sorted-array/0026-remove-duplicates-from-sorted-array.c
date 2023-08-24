@@ -1,21 +1,11 @@
-#include <stdio.h>
-
 int removeDuplicates(int* nums, int numsSize){
-    int uniqcnt=0;
-    for (int i=0; i<numsSize; i++){
-        if (ifDup(nums, numsSize, i, nums[i])){
-            nums[uniqcnt] = nums[i];
-            uniqcnt++;
+    int count = 0;
+    for (int i=1; i<numsSize; i++){
+        if (nums[i] == nums[i-1]){
+            count++;
+        } else {
+            nums[i-count] = nums[i];
         }
     }   
-    return uniqcnt;
-}
-
-int ifDup(int* nums, int numsSize, int k, int value){
-    for (int i=0; i<k; i++){
-        if (nums[i] == value){
-            return 0;
-        }
-    }
-    return 1;
+    return numsSize - count;
 }

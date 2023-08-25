@@ -1,30 +1,42 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        int target = 0;
+        vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        set<vector<int>> s;
-        vector<vector<int>> output;
+
         for (int i=0; i<nums.size(); i++){
-            int j = i+1;
-            int k = nums.size()-1;
-            while (j<k){
-                int sum = nums[i] + nums[j] + nums[k];
-                if (sum == target){
-                    s.insert({nums[i], nums[j], nums[k]});
-                    j++;
-                    k--;
-                } else if (sum < target){
-                    j++;
+            int target = -nums[i];
+            int front = i+1;
+            int back = nums.size()-1;
+
+            while (front < back){
+                int sum = nums[front] + nums[back];
+
+                // Finding answer which start from number num[i]
+                if (sum < target){
+                    front++;
+                } else if (sum > target){
+                    back--;
                 } else {
-                    k--;
+                    vector<int> triplet = {nums[i], nums[front], nums[back]};
+                    res.push_back(triplet);
+
+                    // Processing duplicates of Number 2
+                    // Rolling the front pointer to the next different number forwards
+                    while (front < back && nums[front] == triplet[1]) {front++;}
+
+                    // Processing duplicates of Number 3
+                    // Rolling the back pointer to the next different number backwards
+                    while (front < back && nums[back] == triplet[2]) {back--;}
                 }
             }
+            // Processing duplicates of Number 1
+            while (i+1 < nums.size() && nums[i+1] == nums[i]){
+                i++;
+            }
+
         }
-        
-        // s에 있는 element들이 triplets에 복사돼서 하나씩 출력되는데 타입을 auto로 자동인식되도록 함
-        for(auto triplets : s)
-            output.push_back(triplets);
-        return output;
-    }
+        return res;   
+    }    
+ 
 };

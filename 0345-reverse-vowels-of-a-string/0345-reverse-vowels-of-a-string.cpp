@@ -6,8 +6,7 @@ public:
             l = s.find_first_of("aeiouAEIOU", l);
             r = s.find_last_of("aeiouAEIOU", r);
             if (l<r){
-                swap(s[l], s[r]);
-                l++; r--;
+                swap(s[l++], s[r--]);
             }
         }
         return s;        

@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if (head == nullptr){return nullptr;}
+        if (head == nullptr){return head;}
         ListNode * lastElement = head;
         int length = 1;
         // list의 길이 / 마지막 node 구하기

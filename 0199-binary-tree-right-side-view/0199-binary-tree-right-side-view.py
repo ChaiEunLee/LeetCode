@@ -7,11 +7,13 @@
 from collections import deque
 
 class Solution:
-    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        ans = []
+    def rightSideView(self, root):
+        view = []
         if root:
             level = [root]
             while level:
-                ans.append(level[-1].val)
+                #level에 순서대로 넣으니까 가장 오른쪽에 있는 node값을 view에 넣는다.
+                view += level[-1].val,
+                #각 level에 있는 노드별로 left, right가 있으면 그걸 level로 업데이트. 
                 level = [kid for node in level for kid in (node.left, node.right) if kid]
-        return ans
+        return view

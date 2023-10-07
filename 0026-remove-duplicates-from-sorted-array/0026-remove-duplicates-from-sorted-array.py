@@ -1,5 +1,10 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        nums_uniq = list(set(nums))
-        nums[0:len(nums_uniq)] = sorted(nums_uniq)
-        return len(nums_uniq)
+        uniq = []
+        idx = 0
+        for i in range(len(nums)):
+            if nums[i] not in uniq:
+                nums[idx] = nums[i]
+                uniq.append(nums[i])
+                idx += 1
+        return idx

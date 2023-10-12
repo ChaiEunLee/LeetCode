@@ -1,11 +1,17 @@
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        i,j = 0, len(height) - 1
-        water = 0
-        while i<j:
-            water = max(water, (j-i)*min(height[i], height[j]))
-            if height[i] < height[j]:
-                i += 1
+        # two pointer로 양쪽에서 오면서 짧은 기둥 기준으로 곱하기 -> 더 많으면 max area 덮어쓰기
+        l = 0
+        r = len(height)-1
+        maxarea = 0
+        
+        while l<r:
+#            maxarea = max(maxarea,min(height[r],height[l])*(r-l) )
+            if maxarea < min(height[r],height[l])*(r-l):
+                maxarea = min(height[r],height[l])*(r-l)
+            if height[l] < height[r]:
+                l += 1
             else:
-                j -= 1
-        return water
+                r -= 1
+
+        return maxarea

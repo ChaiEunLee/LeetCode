@@ -1,26 +1,10 @@
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        # set이 같아야하고
-        # 개수, 순서도..
-        if len(set(s)) != len(set(t)):
-            return False
-
-        myDict = {}
-        for i in range(len(s)):
-            if s[i] in myDict:
-                myDict[s[i]].append(i)
-            else:
-                myDict[s[i]] = [i]
-
-        myDict2 = {}
-        for j in range(len(t)):
-            if t[j] in myDict2:
-                myDict2[t[j]].append(j)
-            else:
-                myDict2[t[j]] = [j]
-        
-        for value in myDict.values():
-            if value not in myDict2.values():
+        m1, m2 = [0] * 256, [0] * 256
+        n = len(s)
+        for i in range(n):
+            if m1[ord(s[i])] != m2[ord(t[i])]:
                 return False
-
+            m1[ord(s[i])] = i + 1
+            m2[ord(t[i])] = i + 1
         return True

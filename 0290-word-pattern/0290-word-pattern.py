@@ -1,21 +1,9 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
-        s_list = s.split(' ')
-        if len(s_list) != len(pattern):
-            return False
+        t = s.split(' ')
+        #map은 list에 있는 글자를 숫자로 변환해줌
+        print(list(map(pattern.find, pattern)))
+        print(list(map(t.index, t)))
         
-        myDict = {}
+        return list(map(pattern.find, pattern)) == list(map(t.index, t))
         
-        for i in range(len(pattern)):
-#            print(myDict, pattern[i], s_list[i])
-            if pattern[i] in myDict:
-                if myDict[pattern[i]] != s_list[i]:
-#                    print('false')
-                    return False
-            else:
-                if s_list[i] in myDict.values():
-                    return False
-                myDict[pattern[i]] = s_list[i]
-                
-        return True
-    

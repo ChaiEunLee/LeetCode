@@ -5,24 +5,13 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        head1, head2 = list1, list2
-        newhead = newlist = ListNode()
         
-        while head1 and head2:
-            # compare the value
-            if head1.val >= head2.val:
-                newlist.next = head2
-                newlist= newlist.next
-                head2 = head2.next
-            else:
-                newlist.next = head1
-                newlist = newlist.next
-                head1 = head1.next
-
-        # 남은 리스트 통째로 붙이기
-        if head1:
-            newlist.next = head1
-        if head2:
-            newlist.next = head2
+        # list1이 없거나 list1 값이 list2보다 크면 list1 기준으로 통합해야하니까 list2랑 list1을 바꾸기.
+        if (not list1) or (list2 and list1.val > list2.val):
+            list1, list2 = list2, list1
         
-        return newhead.next
+        # list1.next, list2로 가서 다시 통합~
+        if list1:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+        
+        return list1

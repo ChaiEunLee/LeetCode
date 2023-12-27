@@ -5,10 +5,10 @@
 #         self.next = next
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # 뒤집기
-        rev = None
+        node, prev = head, None
         
-        while head:
-            rev, rev.next, head = head, rev, head.next
-        
-        return rev
+        while node:
+            next, node.next = node.next, prev # node이동, node.next = prev로 연결
+            prev, node = node, next #다음 step을 위해서 prev 이동, node 이동
+            
+        return prev

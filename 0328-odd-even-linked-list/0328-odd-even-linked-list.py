@@ -6,18 +6,16 @@
 class Solution:
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if head is None:
-            return head
+            return None
         
-        fhead = first = head
-        shead = second = head.next
-        
-        while second and second.next:
-            first.next = first.next.next
-            second.next = second.next.next
+        odd = head
+        evenhead = even = head.next
+
+        while even and even.next:
+            odd.next, even.next  = odd.next.next, even.next.next
+            odd, even = odd.next, even.next
             
-            first = first.next
-            second = second.next
-            
-        first.next = shead
+        odd.next = evenhead
         
-        return fhead
+        return head
+            

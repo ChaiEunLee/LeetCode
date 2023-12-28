@@ -5,48 +5,27 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        # reverse -> add -> reverse
+        root = head = ListNode(0)
         
-        # 자릿수 법칙을 좀 잘 사용해야할듯.
-        # reverse order로 저장되어있으니까 앞부터 더하면 됨.
-        carrier = 0
-        sumlisthead = sumlist = ListNode()
-        
-        while l1 and l2:
-            num = l1.val + l2.val + carrier
-            if num >= 10:
-                carrier = 1
-                num %= 10
-            else:
-                carrier = 0
-            sumlist.next = ListNode(num)
-            sumlist = sumlist.next
-            l1 = l1.next
-            l2 = l2.next
-        
-        # 리스트가 남으면
-        while l1 or l2:
-            # which list is left : l1 or l2
+        carry = 0
+        while l1 or l2 or carry:
+            sum = 0
+            # 두 입력값의 합 계산
             if l1:
-                num = l1.val + carrier
+                sum += l1.val
                 l1 = l1.next
             if l2:
-                num = l2.val + carrier
+                sum += l2.val
                 l2 = l2.next
             
-            # carrier
-            if num >= 10:
-                carrier = 1
-                num %= 10
-            else:
-                carrier = 0
-                
-            sumlist.next = ListNode(num)
-            sumlist = sumlist.next
-        
-        # if carrier = 1
-        if carrier == 1:
-            sumlist.next = ListNode(1)
+            # 몫과 나머지 계산
+            carry, val = divmod(sum+carry,10)
+            # divmod 안 쓸거면 일의자리부터 계산해야함. 
+#            val = (sum+carry) % 10 #일의자리
+#            carry = (sum+carry) // 10 #십의자리
+            head.next = ListNode(val)
+            head = head.next
             
-        return sumlisthead.next
+        return root.next
+            
         

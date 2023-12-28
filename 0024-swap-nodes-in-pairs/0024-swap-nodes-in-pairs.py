@@ -5,21 +5,18 @@
 #         self.next = next
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        #(asis) prev -> a -> b -> b.next
-        #(tobe) prev -> b -> a -> b.next
         root = prev = ListNode(None)
         prev.next = head
         
         while head and head.next:
-            b = head.next
-
-            head.next = b.next
-            b.next = head
-
-            prev.next = b
-
-            #init
-            prev = prev.next.next
+            # 앞 뒤 swap
+            temp = head.next
+            head.next = temp.next #1->3
+            temp.next = head #2->1
+            
+            prev.next = temp # head를 새롭게 지정
+            
             head = head.next
- 
+            prev = prev.next.next
+            
         return root.next

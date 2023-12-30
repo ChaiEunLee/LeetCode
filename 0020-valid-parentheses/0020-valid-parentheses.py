@@ -1,17 +1,19 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        myDict = {'}':'{', ')':'(',']':'['}
-        
-        myStack = []
-        for i in s:
-            if i in ['(','[','{']:
-                myStack.append(i)
+        myDict = {'(':')', '{':'}', '[':']'}
+        queue = []
+        for i in range(len(s)):
+            if s[i] in ['(','{','[']:
+                queue.append(s[i])
             else:
-                if not myStack:
+                if queue:
+                    tmp = queue.pop()
+                else: 
                     return False
-                tmp = myStack.pop()
-                if tmp != myDict[i]:
-                    return False                
-        if myStack:
+                if s[i] != myDict[tmp]:
+                    return False
+        # 괄호가 남아있으면
+        if queue:
             return False
         return True
+            

@@ -4,12 +4,14 @@ class Solution:
         # stack으로 쌓고 빼면서 기온 올라갔으면 빼고 아니면 놔두기.
         tempstack = []
         days = [0]*len(temperatures)
-        for i, cur in enumerate(temperatures): #0부터 index, 각 값을 출력함.
-            #print(i, cur)
-            while tempstack and cur > temperatures[tempstack[-1]]:
+        # 날짜를 돌면서
+        for i in range(len(temperatures)):
+            # 오늘 기온이 더 높으면 계속 pop(). 
+            while tempstack and temperatures[tempstack[-1]] < temperatures[i]:
                 last = tempstack.pop()
-                days[last] = i - last #매번 더하는게 아니라 나중에 차이를 계산해서 넣어주는 방식. 
+                days[last] = i-last
+            # 오늘 기온을 stack에 append
             tempstack.append(i)
-            #print(tempstack, days)
-            
+            #print(i, temperatures[i], tempstack, days)
+        
         return days

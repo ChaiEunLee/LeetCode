@@ -1,49 +1,38 @@
 class MyCircularQueue:
 
     def __init__(self, k: int):
-        self.q = [-1 for _ in range(k)]
+        self.q = [None]*k
         self.k = k
         self.start = 0
         self.end = 0
     def enQueue(self, value: int) -> bool:
         #print(self.q, self.end, self.k)
-        if self.q[self.end] == -1:
+        if self.q[self.end] is None:
             self.q[self.end] = value
-            self.end += 1
-            if self.end == self.k:
-                self.end = 0
+            self.end = (self.end+1) % self.k # 이렇게 한번에..
             return True
         return False
 
     def deQueue(self) -> bool:
         #print(self.q, self.end, self.k)
-        if self.q[self.start] > -1:
-            self.q[self.start] = -1
-            self.start += 1            
-            if self.start == self.k:
-                self.start = 0
+        if self.q[self.start] is None:
+            return False
+        else:
+            self.q[self.start] = None
+            self.start = (self.start+1) % self.k
             return True
-        return False
 
     def Front(self) -> int:
-        return self.q[self.start]
+        return -1 if self.q[self.start] is None else self.q[self.start]
 
     def Rear(self) -> int:
-        if self.end > 0:
-            rearindex = self.end-1
-        else:
-            rearindex = self.k-1
-        return self.q[rearindex]
-
+        return -1 if self.q[self.end-1] is None else self.q[self.end-1]
+        
     def isEmpty(self) -> bool:
-        if self.start == self.end and self.q[self.start] == -1:
-            return True
-        return False
-
+        return self.start == self.end and self.q[self.start] is None
+            
     def isFull(self) -> bool:
-        if self.end == self.start and self.q[self.end] > -1:
-            return True
-        return False
+        return self.start == self.end and self.q[self.start] is not None
         
 
 

@@ -1,37 +1,30 @@
-from collections import deque
-
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
         """
-
-        #base case
-        if not board or not board[0]:
-            return
         
-        #boundary    
+        def dfs(x,y):
+            if 0<=x<len(board) and 0<=y<len(board[0]) and board[x][y] == "O":
+                board[x][y] = "."
+                for nx,ny in (x-1,y),(x+1,y),(x,y-1),(x,y+1):
+                    dfs(nx,ny)
+        
+        # boundary
         for i in [0,len(board)-1]:
             for j in range(len(board[0])):
-                self.dfs(board, i, j)
+                if board[i][j] == "O":
+                    dfs(i,j)
         for i in range(len(board)):
             for j in [0,len(board[0])-1]:
-                self.dfs(board, i, j)
+                if board[i][j] == "O":
+                    dfs(i,j)
         
-        #전체 다 돌면서
         for i in range(len(board)):
             for j in range(len(board[0])):
                 if board[i][j] == "O":
                     board[i][j] = "X"
-                elif board[i][j] == '.':
+                elif board[i][j] == ".":
                     board[i][j] = "O"
                     
-    def dfs(self,board, i, j):
-        if 0 <= i < len(board) and 0 <= j < len(board[0]) and board[i][j] == "O":
-            board[i][j] = "."
-            self.dfs(board, i+1, j)
-            self.dfs(board, i-1, j)
-            self.dfs(board, i, j-1)
-            self.dfs(board, i, j+1)
-
-    
+        return board

@@ -5,13 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    answer = 0
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        # high를 만나면 그 기준으로 그것보다 작은 수들의 합산으로 계산하면 될듯
-        if root:
-            self.rangeSumBST(root.left, low, high)
-            if root.val <= high and root.val >= low:
-                self.answer += root.val
-            self.rangeSumBST(root.right, low, high)
-        
-        return self.answer
+        if not root:
+            return 0
+        return (root.val if low <= root.val <= high else 0) + self.rangeSumBST(root.left, low, high) + self.rangeSumBST(root.right, low, high)

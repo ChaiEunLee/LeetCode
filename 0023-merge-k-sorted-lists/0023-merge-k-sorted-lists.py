@@ -14,14 +14,10 @@ class Solution:
         return self.merge(l,r)
         
     def merge(self, l, r):
-        dummy = p = ListNode()
-        while l and r:
-            if l.val < r.val:
-                p.next = l
-                l = l.next
-            else:
-                p.next = r
-                r = r.next
-            p = p.next
-        p.next = l or r
-        return dummy.next
+        if not l or not r:
+            return l or r
+        if l.val < r.val:
+            l.next = self.merge(l.next, r)
+            return l
+        r.next = self.merge(l, r.next)
+        return r

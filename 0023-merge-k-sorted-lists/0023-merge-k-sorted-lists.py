@@ -1,5 +1,3 @@
-from queue import PriorityQueue
-
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -7,15 +5,23 @@ from queue import PriorityQueue
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        k = len(lists)
-        q = PriorityQueue(maxsize=k)
-        dummy = ListNode(None)
-        curr = dummy
-        for list_idx, node in enumerate(lists):
-            if node: q.put((node.val, list_idx, node))
-        while q.qsize() > 0:
-            poped = q.get()
-            curr.next, list_idx = poped[2], poped[1]
-            curr = curr.next
-            if curr.next: q.put((curr.next.val, list_idx, curr.next))
+        if not lists:
+            return None
+        if len(lists) == 1:
+            return lists[0]
+        mid = len(lists)//2
+        l,r = self.mergeKLists(lists[:mid]), self.mergeKLists(lists[mid:])
+        return self.merge(l,r)
+        
+    def merge(self, l, r):
+        dummy = p = ListNode()
+        while l and r:
+            if l.val < r.val:
+                p.next = l
+                l = l.next
+            else:
+                p.next = r
+                r = r.next
+            p = p.next
+        p.next = l or r
         return dummy.next

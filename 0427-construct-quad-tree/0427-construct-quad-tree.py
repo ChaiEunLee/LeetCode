@@ -13,8 +13,9 @@ class Node:
 class Solution:
     def construct(self, grid: List[List[int]]) -> 'Node':
         root = Node(True, True, None, None, None, None)
+        # 모든 elements가 한개의 값일 때
         if len(set([item for row in grid for item in row])) == 1:
-            root.val = bool(grid[0][0])
+            root.val = bool(grid[0][0]) # val를 넣는데 굳이 bool로 넣는 이유는??
         else:
             root.isLeaf = False
             size = len(grid)

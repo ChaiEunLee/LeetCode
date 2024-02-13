@@ -3,7 +3,6 @@ class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         for k,v in enumerate(numbers):
             expected = target-v
-            nums = numbers[k+1:]
-            i = bisect.bisect_left(nums, expected)
-            if i<len(nums) and numbers[i+k+1]==expected:
-                return k+1, i+k+2 #(기준인 k+1에다가 +i 더하는 위치인데, 정답은 index가 1부터 시작되므로 +1해줌)
+            i = bisect.bisect_left(numbers, expected, k+1) # 내장된 bisect 파라미터 lo 사용
+            if i<len(numbers) and numbers[i]==expected:
+                return k+1, i+1

@@ -12,16 +12,14 @@ class Solution:
             return
         stack = []
         order = 0
-        pre = None
-        
+
         while root or stack:
             while root:
                 stack.append(root)
                 root=root.left
-
             root = stack.pop()
-            order += 1
-            if order==k:
-                return root.val
-            pre = root
+            k -=1
+            if k==0:
+                break
             root = root.right
+        return root.val

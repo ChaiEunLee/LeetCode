@@ -4,8 +4,8 @@ class Solution:
         # x^y 하면 알아서 2진수 XOR -> 10진수로 바꿔줌
         xor = x^y
         count=0
-        for _ in range(32):
-#            print(xor, xor&1)
-            count += xor & 1 #맨 뒷자리가 1인것만 count 하겠다는것(xor 결과가 1이면 다른거라서)
-            xor = xor>>1 #shift
+        while xor>0:
+            #print(xor, xor-1, xor&(xor-1))
+            xor &= (xor-1) #removes the last bit. 1을 카운트하는 방법인가봐??? 머리로는 이해안되지만 해보면 되긴함.
+            count += 1
         return count

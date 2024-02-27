@@ -1,19 +1,28 @@
+import collections
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        # collections.Counter(t) : t의 글자랑 개수를 세줌. 
-        need, missing = collections.Counter(t), len(t)
-        #print(need, missing)
-        i = I = J = 0 # The current window is s[i:j] and the result window is s[I:J]
-        
-        for j, c in enumerate(s,1): #s글자 돌면서 
-            missing -= need[c] > 0 #need에 있으면 missing-1
-            need[c] -= 1 #need에서는 무조건 1 빼줌. 없는 단어면 -1이 들어감.
-            if not missing: #missing>0
-                # start index i 찾기
-                while i<j and need[s[i]] < 0: #i<j인데 현재 단어가 필요없는 단어면 시작지점을 옮긴다. i+=1을 해줄것.
-                    need[s[i]] += 1
-                    i += 1
-                # 끝까지 다 돌았거나, 이번에 돈게 J-I보다 작아서 짧은 길이가 발견되면 I,J 업데이트
-                if not J or j-i <= J-I:
-                    I,J = i,j
-        return s[I:J]
+        need = collections.Counter(t) #t element를 key, 개수를 value로 dict 만들어줌. 
+        missing = len(t)
+        left = start = end = 0
+ 
+        # move right pointer
+        for right, char in enumerate(s,1): # enumerate(s), index는 1부터
+            print(right, char)
+            missing -= need[char] > 0
+            need[char] -= 1
+            #print(missing, need)
+            
+            # move left pointer if missing is 0
+            # 왼쪽 포인터를 더 줄여서 subarray를 더 줄일 수 있는지 확인
+            if missing == 0:
+                while left < right and need[s[left]] < 0: # need가 음수면 left pointer가 엉뚱한 글자를 가리키고 있을테니 0까지 이동하기.
+                    need[s[left]] += 1
+                    left += 1
+                if not end or right-left <= end-start:
+                    start, end = left, right
+                    need[s[left]] += 1
+                    missing += 1
+                    left += 1
+                    #print(need, missing, left)
+                    
+        return s[start:end]

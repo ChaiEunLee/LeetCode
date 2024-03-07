@@ -1,11 +1,8 @@
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        dp = [0 for _ in range(len(triangle))]
-        dp[0] = triangle[0][0]
-        
         for i in range(1,len(triangle)):
             for j in range(len(triangle[i])):
-                print(i,j)
+                #print(i,j)
                 if j==0:
                     # 가장자리
                     triangle[i][j] = triangle[i][j] + triangle[i-1][j]

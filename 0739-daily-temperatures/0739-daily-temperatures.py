@@ -1,21 +1,13 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        # number of days you have to wait after the ith day to get warmer temperature
-        # stack
-        # 현재보다 기온이 올라가면 pop 아니면 놔두기?????그게 무슨말이지?
-        
-        # temperatures를 돌면서 
-        # 오늘 기온보다 높아진 거 있으면 pop 후 오늘 기온 append
-        
-        tempstack = [0]
+        # for loop 돌면서 현재 기온보다 낮은것들을 기록하기
+        tempstack=[0] #index
         days = [0]*len(temperatures)
         
         for i in range(len(temperatures)):
-            #print(i, temperatures[tempstack])
-            while tempstack and temperatures[tempstack[-1]] < temperatures[i]: #과거기온<현재기온
-                # 현재기온보다 낮은 기온들을 넣어주는 방식
+            # tempstack 최근거부터 차근히. 날짜 세야해서
+            while tempstack and temperatures[tempstack[-1]] < temperatures[i]:
                 last = tempstack.pop()
                 days[last] = i-last
             tempstack.append(i)
-            
         return days

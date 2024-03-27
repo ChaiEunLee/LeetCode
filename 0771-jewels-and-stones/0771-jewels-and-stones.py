@@ -1,12 +1,16 @@
 class Solution:
     def numJewelsInStones(self, jewels: str, stones: str) -> int:
-        freqs = collections.defaultdict(int)
+        freqs = {}
         count = 0
         
         for char in stones:
-            freqs[char] += 1
-        
+            if char in freqs:
+                freqs[char] += 1
+            else:
+                freqs[char] = 1
+                
         for char in jewels:
-            count += freqs[char]
-            
+            if char in freqs:
+                count += freqs[char]
+                
         return count
